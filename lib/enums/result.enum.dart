@@ -1,0 +1,4 @@
+enum Result {
+   winner,
+   losser,
+}

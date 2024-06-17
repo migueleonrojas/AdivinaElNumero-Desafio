@@ -4,29 +4,33 @@ import 'package:agnostiko_test/models/range_level.model.dart';
 
 class DifficultyLevelsConstant {
 
-  static final List<DifficultyLevelsModel> difficultyLevelsModel = [
+
+  get difficultyLevelsModel => _difficultyLevelsModel;
+
+
+  final List<DifficultyLevelsModel> _difficultyLevelsModel = [
     DifficultyLevelsModel(
       difficulty: Difficulty.easy,
       nameOfDifficulty: 'Fácil',
-      rangeLevelModel: RangeLevelModel(max: 1, min: 10),
+      rangeLevelModel: RangeLevelModel(min: 1, max: 10),
       attempts: 5,
     ),
     DifficultyLevelsModel(
       difficulty: Difficulty.medium,
       nameOfDifficulty: 'Medio',
-      rangeLevelModel: RangeLevelModel(max: 1, min: 20),
+      rangeLevelModel: RangeLevelModel(min: 1, max: 20),
       attempts: 8,
     ),
     DifficultyLevelsModel(
       difficulty: Difficulty.avanced,
       nameOfDifficulty: 'Avanzado',
-      rangeLevelModel: RangeLevelModel(max: 1, min: 100),
+      rangeLevelModel: RangeLevelModel(min: 1, max: 100),
       attempts: 15,
     ),
     DifficultyLevelsModel(
       difficulty: Difficulty.extreme,
       nameOfDifficulty: 'Extremo',
-      rangeLevelModel: RangeLevelModel(max: 1, min: 1000),
+      rangeLevelModel: RangeLevelModel(min: 1, max: 1000),
       attempts: 25,
     ),
   ];

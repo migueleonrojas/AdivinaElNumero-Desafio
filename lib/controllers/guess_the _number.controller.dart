@@ -1,8 +1,22 @@
+import 'package:agnostiko_test/constants/difficulty_levels.dart';
+import 'package:agnostiko_test/enums/difficulty.enum.dart';
+import 'package:agnostiko_test/enums/result.enum.dart';
+import 'package:agnostiko_test/models/difficulty_levels.model.dart';
+import 'package:agnostiko_test/models/history_numbers.model.dart';
+import 'package:agnostiko_test/models/range_level.model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 
 class GuessTheNumberController extends GetxController {
+
+  RxDouble valueSlider = 0.0.obs;
+  Rx<DifficultyLevelsModel> currentDifficultyLevel = DifficultyLevelsModel(
+    attempts: 0,
+    difficulty: Difficulty.easy,
+    nameOfDifficulty: 'Fácil',
+    rangeLevelModel: RangeLevelModel(max: 0, min: 0)
+  ).obs;
 
   FocusNode numberFocusNode = FocusNode();
 
@@ -11,6 +25,12 @@ class GuessTheNumberController extends GetxController {
   Rx<Color> borderSideColor = Colors.white.obs;
   Rx<Color> textColor = Colors.white.obs;
   Rx<Color> labelTextColor = Colors.white.obs;
+
+  RxList<int> minorNumbers = <int>[].obs;
+
+  RxList<int> largerNumbers = <int>[].obs;
+
+  RxList<HistoryNumbersModel> historyNumbers = <HistoryNumbersModel>[].obs;
 
   initVariables() {
     numberFocusNode.addListener(() { 
@@ -27,6 +47,11 @@ class GuessTheNumberController extends GetxController {
     });
   }
 
+  changeDifficulty(double value) {
+    valueSlider.value = value;
+    currentDifficultyLevel.value = DifficultyLevelsConstant().difficultyLevelsModel[value.toInt()];
+  }
+
 
   
   tryToGuessNumber (String value) {
@@ -34,11 +59,11 @@ class GuessTheNumberController extends GetxController {
     if(!_validateNumber(value)) {
       return false;
     }
+    if(_validateScaleNumber(int.parse(value))) {
+      return false;
+    }
 
-    
-    
   }
-
 
   bool _validateNumber(String number) {
 
@@ -57,8 +82,25 @@ class GuessTheNumberController extends GetxController {
 
   }
 
-  _validateScaleNumber (int number) {
+  bool _validateScaleNumber (int number) {
 
+    int minValueRange = currentDifficultyLevel.value.rangeLevelModel.min;
+    int maxValueRange = currentDifficultyLevel.value.rangeLevelModel.max;
+
+    if(
+      number > maxValueRange ||
+      number < minValueRange
+    ){
+
+      showAlert(
+        title: 'Número fuera de rango',
+        message: 'Debe colocar un número entre un rango mínimo de $minValueRange hasta un rango máximo de $maxValueRange.',
+        duration: const Duration(seconds: 6)
+      );
+      return false;
+    }
+
+    return true;
   }
 
 
