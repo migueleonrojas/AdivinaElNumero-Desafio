@@ -12,16 +12,18 @@ class HomePage extends StatelessWidget {
     final GuessTheNumberController guessTheNumberController = Get.put(GuessTheNumberController());
 
     guessTheNumberController.initVariables();
-
+    
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF2C2C2A),
-        title: const Text(
-          'Adivina el número',
-          style: TextStyle(
-            color: Colors.white
+        title:  Obx(
+          () => Text(
+            'Adivina el número ${guessTheNumberController.randomNumber.value.toString()}',
+            style: TextStyle(
+              color: Colors.white
+            ),
           ),
         ),
         
@@ -85,7 +87,7 @@ class HomePage extends StatelessWidget {
                     ),
                     Obx(
                       () => Text(
-                        guessTheNumberController.currentDifficultyLevel.value.attempts.toString(),
+                        guessTheNumberController.currentAttempts.value.toString(),
                         style: const TextStyle(
                           color: Colors.white
                         ),
@@ -125,19 +127,21 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       ),
                       SizedBox(height: size.height * 0.01,),
-                      Expanded(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: guessTheNumberController.minorNumbers.length,
-                          itemBuilder: (context, index) {
-                            return Text(
-                              guessTheNumberController.minorNumbers[index].toString(),
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Colors.white
-                              ),
-                            );
-                          },
+                      Obx(
+                        () => Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: guessTheNumberController.largerNumbers.length,
+                            itemBuilder: (context, index) {
+                              return Text(
+                                guessTheNumberController.largerNumbers[index].toString(),
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  color: Colors.white
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                       SizedBox(height: size.height * 0.01,)                  
@@ -166,19 +170,21 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       ),
                       SizedBox(height: size.height * 0.01,),
-                      Expanded(
-                        child: ListView.builder(            
-                          shrinkWrap: true,
-                          itemCount: guessTheNumberController.largerNumbers.length,
-                          itemBuilder: (context, index) {
-                            return Text(
-                              guessTheNumberController.largerNumbers[index].toString(),
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Colors.white
-                              ),
-                            );
-                          },
+                      Obx(
+                        () => Expanded(
+                          child: ListView.builder(            
+                            shrinkWrap: true,
+                            itemCount: guessTheNumberController.minorNumbers.length,
+                            itemBuilder: (context, index) {
+                              return Text(
+                                guessTheNumberController.minorNumbers[index].toString(),
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  color: Colors.white
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                       SizedBox(height: size.height * 0.01,)                  
@@ -207,22 +213,24 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       ),
                       SizedBox(height: size.height * 0.01,),
-                      Expanded(
-                        child: ListView.builder(            
-                          shrinkWrap: true,
-                          itemCount: guessTheNumberController.historyNumbers.length,
-                          itemBuilder: (context, index) {
-
-                            HistoryNumbersModel historyNumbersModel = HistoryNumbersModel.fromJson(guessTheNumberController.historyNumbers[index].toJson());
-
-                            return Text(
-                              historyNumbersModel.numberHistory.toString(),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: historyNumbersModel.color
-                              ),
-                            );
-                          },
+                      Obx(
+                        () => Expanded(
+                          child: ListView.builder(            
+                            shrinkWrap: true,
+                            itemCount: guessTheNumberController.historyNumbers.length,
+                            itemBuilder: (context, index) {
+                        
+                              HistoryNumbersModel historyNumbersModel = HistoryNumbersModel.fromJson(guessTheNumberController.historyNumbers[index].toJson());
+                        
+                              return Text(
+                                historyNumbersModel.numberHistory.toString(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: historyNumbersModel.color
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                       SizedBox(height: size.height * 0.01,) 
