@@ -9,37 +9,69 @@ import 'package:get/get.dart';
 
 
 class GuessTheNumberController extends GetxController {
-  GlobalKey globalKeyMinorNumbers = GlobalKey();
-  GlobalKey globalKeyLargerNumbers = GlobalKey();
-  GlobalKey globalKeyHistoryNumbers = GlobalKey();
+  final GlobalKey _globalKeyMinorNumbers = GlobalKey();
+  GlobalKey get globalKeyMinorNumbers => _globalKeyMinorNumbers;
 
-  double heightElementList = Get.size.height * 0.025;
+  final GlobalKey _globalKeyLargerNumbers = GlobalKey();
+  GlobalKey get globalKeyLargerNumbers => _globalKeyLargerNumbers;
 
-  RxInt randomNumber = 0.obs;
+  final GlobalKey _globalKeyHistoryNumbers = GlobalKey();
+  GlobalKey get globalKeyHistoryNumbers => _globalKeyHistoryNumbers;
 
-  RxDouble valueSlider = 0.0.obs;
 
-  Rx<DifficultyLevelWrapper> currentDifficultyLevel = DifficultyLevelWrapper(
+  final double _heightElementList = Get.size.height * 0.025;
+  double get heightElementList => _heightElementList;
+
+  final RxInt _randomNumber = 0.obs;
+  RxInt get randomNumber => _randomNumber;
+
+  final RxDouble _valueSlider = 0.0.obs;
+  RxDouble get valueSlider => _valueSlider;
+
+  final Rx<DifficultyLevelWrapper> _currentDifficultyLevel = DifficultyLevelWrapper(
     difficultyLevels: DifficultyLevelsConstant().difficultyLevelsModel[0]
   ).obs;
+  Rx<DifficultyLevelWrapper> get currentDifficultyLevel => _currentDifficultyLevel;
 
-  FocusNode numberFocusNode = FocusNode();
+  final FocusNode _numberFocusNode = FocusNode();
+  FocusNode get numberFocusNode => _numberFocusNode;
 
-  TextEditingController numberTextEditingController = TextEditingController();
 
-  ScrollController minorNumbersScrollController =  ScrollController();
-  ScrollController largerNumbersScrollController = ScrollController();
-  ScrollController historyNumberssScrollController = ScrollController();
+  final TextEditingController _numberTextEditingController = TextEditingController();
+  TextEditingController get numberTextEditingController => _numberTextEditingController;
 
-  Rx<Color> cursorColor = Colors.blue.obs;
-  Rx<Color> focusColor = Colors.white.obs;
-  Rx<Color> borderSideColor = Colors.white.obs;
-  Rx<Color> textColor = Colors.white.obs;
-  Rx<Color> labelTextColor = Colors.white.obs;
+  final ScrollController _minorNumbersScrollController =  ScrollController();
+  ScrollController get minorNumbersScrollController => _minorNumbersScrollController;
 
-  RxList<int> minorNumbers = <int>[].obs;
-  RxList<int> largerNumbers = <int>[].obs;
-  RxList<HistoryNumbersModel> historyNumbers = <HistoryNumbersModel>[].obs;
+  final ScrollController _largerNumbersScrollController = ScrollController();
+  ScrollController get largerNumbersScrollController => _largerNumbersScrollController;
+
+  final ScrollController _historyNumberssScrollController = ScrollController();
+  ScrollController get historyNumberssScrollController => _historyNumberssScrollController;
+
+  final Rx<Color> _cursorColor = Colors.blue.obs;
+  Rx<Color> get cursorColor => _cursorColor;
+
+  final Rx<Color> _focusColor = Colors.white.obs;
+  Rx<Color> get focusColor => _focusColor;
+
+  final Rx<Color> _borderSideColor = Colors.white.obs;
+  Rx<Color> get borderSideColor => _borderSideColor;
+
+  final Rx<Color> _textColor = Colors.white.obs;
+  Rx<Color> get textColor => _textColor;
+  
+  final Rx<Color> _labelTextColor = Colors.white.obs;
+  Rx<Color> get labelTextColor => _labelTextColor;
+
+  final RxList<int> _minorNumbers = <int>[].obs;
+  RxList<int> get minorNumbers => _minorNumbers;
+
+  final RxList<int> _largerNumbers = <int>[].obs;
+  RxList<int> get largerNumbers => _largerNumbers;
+
+  final RxList<HistoryNumbersModel> _historyNumbers = <HistoryNumbersModel>[].obs;
+  RxList<HistoryNumbersModel> get historyNumbers => _historyNumbers;
 
   initVariables() {
     if(randomNumber.value == 0) {
@@ -149,7 +181,7 @@ class GuessTheNumberController extends GetxController {
         minorNumbers.add(number);
         minorNumbers.refresh();
         _scrollListNumber(
-           keyList: globalKeyMinorNumbers,
+           keyList: _globalKeyMinorNumbers,
            listNumber: minorNumbers,
            scrollControllerList: minorNumbersScrollController
         );
@@ -174,8 +206,8 @@ class GuessTheNumberController extends GetxController {
   }
 
   _generateRandomNumber() {
-    int maxValueRange =  currentDifficultyLevel.value.difficultyLevels.rangeLevelModel.max;
     int minValueRange =  currentDifficultyLevel.value.difficultyLevels.rangeLevelModel.min;
+    int maxValueRange =  currentDifficultyLevel.value.difficultyLevels.rangeLevelModel.max - 1;
     randomNumber.value = Random().nextInt(maxValueRange + minValueRange) + minValueRange;
   }
 
@@ -184,7 +216,7 @@ class GuessTheNumberController extends GetxController {
     largerNumbers.refresh();
     minorNumbers.value = [];
     minorNumbers.refresh();
-    currentDifficultyLevel.value.setDifficultyLevel = DifficultyLevelsConstant().difficultyLevelsModel[valueSlider.toInt()];
+    currentDifficultyLevel.value.setDifficultyLevel = DifficultyLevelsConstant().difficultyLevelsModel[valueSlider.value.toInt()];
     currentDifficultyLevel.refresh();
   }
 
