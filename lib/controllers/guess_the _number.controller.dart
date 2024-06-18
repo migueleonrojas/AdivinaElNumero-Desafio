@@ -115,7 +115,7 @@ class GuessTheNumberController extends GetxController {
     if(!expNumbers.hasMatch(number)){
       showAlert(
         title: 'Número no válido',
-        message: 'Debe ingresar un número valido.',
+        message: 'Un número válido no contiene letras del abecedario, caracteres especiales ni espaciados.',
         duration: const Duration(seconds: 4)
       );
       return false;

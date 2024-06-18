@@ -1,6 +1,7 @@
 import 'package:agnostiko_test/controllers/guess_the%20_number.controller.dart';
 import 'package:agnostiko_test/models/history_numbers.model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 
@@ -42,6 +43,7 @@ class HomePage extends StatelessWidget {
                     width: size.width * 0.30,
                     child: Obx( () =>
                       TextField(
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           controller: guessTheNumberController.numberTextEditingController,
                           onSubmitted: (value) => guessTheNumberController.tryToGuessNumber(value),
                           cursorColor: guessTheNumberController.cursorColor.value,
