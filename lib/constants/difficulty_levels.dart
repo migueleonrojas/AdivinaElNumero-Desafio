@@ -22,7 +22,7 @@ class DifficultyLevelsConstant {
       attempts: 8,
     ),
     DifficultyLevelsModel(
-      difficulty: Difficulty.avanced,
+      difficulty: Difficulty.advanced,
       nameOfDifficulty: 'Avanzado',
       rangeLevelModel: RangeLevelModel(min: 1, max: 100),
       attempts: 15,

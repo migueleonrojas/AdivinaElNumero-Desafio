@@ -1,6 +1,6 @@
 enum Difficulty {
    easy,
    medium,
-   avanced,
+   advanced,
    extreme,
 }

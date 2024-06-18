@@ -92,6 +92,7 @@ class GuessTheNumberController extends GetxController {
   }
 
   changeDifficulty(double value) {
+    numberTextEditingController.clear();
     valueSlider.value = value;
     currentDifficultyLevel.value.difficultyLevels = DifficultyLevelsConstant().difficultyLevelsModel[value.toInt()];
     currentDifficultyLevel.refresh();

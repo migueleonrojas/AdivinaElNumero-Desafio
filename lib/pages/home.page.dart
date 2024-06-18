@@ -43,7 +43,8 @@ class HomePage extends StatelessWidget {
                 SizedBox(
                   width: size.width * 0.30,
                   child: Obx( () =>
-                    TextField(           
+                    TextField(      
+                           
                         controller: guessTheNumberController.numberTextEditingController,
                         onSubmitted: (value) => guessTheNumberController.tryToGuessNumber(value),
                         cursorColor: guessTheNumberController.cursorColor.value,
@@ -58,7 +59,10 @@ class HomePage extends StatelessWidget {
                             ),
                           ),
                           labelText: 'Número',
-                        
+                          hintText: '###',
+                          hintStyle: const TextStyle(
+                            color: Color(0xABFFFFFF)
+                          ),
                           labelStyle: TextStyle(
                             color: guessTheNumberController.labelTextColor.value
                           ), 
