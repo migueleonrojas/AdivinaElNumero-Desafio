@@ -226,9 +226,15 @@ class GuessTheNumberController extends GetxController {
     required RxList<dynamic> listNumber, 
     required ScrollController scrollControllerList
   }) {
+
+    if(listNumber.length == 1){
+      scrollControllerList.jumpTo(0);
+      return;
+    }
+
     if(((listNumber.length + 1) * heightElementList) > keyList.currentContext!.size!.height) {
       scrollControllerList.animateTo(
-        keyList.currentContext!.size!.height, 
+        listNumber.length * heightElementList, 
         duration: const Duration(milliseconds: 300), 
         curve: Curves.linear
       );
