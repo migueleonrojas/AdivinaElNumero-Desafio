@@ -17,11 +17,11 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF2C2C2A),
+        backgroundColor: const Color(0xFF2C2C2A),
         title:  Obx(
           () => Text(
             'Adivina el número ${guessTheNumberController.randomNumber.value.toString()}',
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white
             ),
           ),
@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
         centerTitle: true,
       ),
       body: Container(
-        color: Color.fromARGB(255, 34, 34, 33),
+        color: const Color.fromARGB(255, 34, 34, 33),
         width: size.width,
 
         child: Column(
@@ -43,7 +43,8 @@ class HomePage extends StatelessWidget {
                 SizedBox(
                   width: size.width * 0.30,
                   child: Obx( () =>
-                    TextField(
+                    TextField(           
+                        controller: guessTheNumberController.numberTextEditingController,
                         onSubmitted: (value) => guessTheNumberController.tryToGuessNumber(value),
                         cursorColor: guessTheNumberController.cursorColor.value,
                         focusNode: guessTheNumberController.numberFocusNode,
@@ -130,6 +131,10 @@ class HomePage extends StatelessWidget {
                       Obx(
                         () => Expanded(
                           child: ListView.builder(
+                            key: guessTheNumberController.globalKeyLargerNumbers,
+                            itemExtent: guessTheNumberController.heightElementList,
+                            scrollDirection: Axis.vertical,
+                            controller: guessTheNumberController.largerNumbersScrollController,
                             shrinkWrap: true,
                             itemCount: guessTheNumberController.largerNumbers.length,
                             itemBuilder: (context, index) {
@@ -172,7 +177,10 @@ class HomePage extends StatelessWidget {
                       SizedBox(height: size.height * 0.01,),
                       Obx(
                         () => Expanded(
-                          child: ListView.builder(            
+                          child: ListView.builder(
+                            key: guessTheNumberController.globalKeyMinorNumbers,
+                            itemExtent: guessTheNumberController.heightElementList,
+                            controller: guessTheNumberController.minorNumbersScrollController,       
                             shrinkWrap: true,
                             itemCount: guessTheNumberController.minorNumbers.length,
                             itemBuilder: (context, index) {
@@ -215,7 +223,10 @@ class HomePage extends StatelessWidget {
                       SizedBox(height: size.height * 0.01,),
                       Obx(
                         () => Expanded(
-                          child: ListView.builder(            
+                          child: ListView.builder(
+                            itemExtent: guessTheNumberController.heightElementList,
+                            key: guessTheNumberController.globalKeyHistoryNumbers,
+                            controller: guessTheNumberController.historyNumberssScrollController,       
                             shrinkWrap: true,
                             itemCount: guessTheNumberController.historyNumbers.length,
                             itemBuilder: (context, index) {
@@ -241,7 +252,7 @@ class HomePage extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 20),
               child: SizedBox(
                 width: size.width * 0.80,
                 child: Column(

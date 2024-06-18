@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:agnostiko_test/enums/result.enum.dart';
-import 'package:agnostiko_test/models/range_level.model.dart';
 import 'package:flutter/material.dart';
 
 HistoryNumbersModel difficultyLevelsModelFromJson(String str) => HistoryNumbersModel.fromJson(json.decode(str));
