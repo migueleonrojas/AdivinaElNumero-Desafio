@@ -111,6 +111,16 @@ class GuessTheNumberController extends GetxController {
   }
 
   bool _validateNumber(String number) {
+
+    if(number.isEmpty) {
+      showAlert(
+        title: 'Se requiere un valor',
+        message: 'Debe indicar un valor preferiblemente un número.',
+        duration: const Duration(seconds: 4)
+      );
+      return false;
+    }
+
     RegExp expNumbers = RegExp(r'^[0-9]+$');
     if(!expNumbers.hasMatch(number)){
       showAlert(
