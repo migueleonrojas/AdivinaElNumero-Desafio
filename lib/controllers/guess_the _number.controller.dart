@@ -150,25 +150,8 @@ class GuessTheNumberController extends GetxController {
       nameOfDifficulty: currentDifficultyLevel.value.difficultyLevels.nameOfDifficulty,
       rangeLevelModel: currentDifficultyLevel.value.difficultyLevels.rangeLevelModel
     );
-    
-    if(currentDifficultyLevel.value.difficultyLevels.attempts == 0) {
-      historyNumbers.add(HistoryNumbersModel(
-        result: Result.losser, 
-        color: Colors.red, 
-        numberHistory: randomNumber.value
-      ));
-      historyNumbers.refresh();
-      _scrollListNumber(
-           keyList: globalKeyHistoryNumbers,
-           listNumber: historyNumbers,
-           scrollControllerList: historyNumberssScrollController
-        );
-      _restartGame();
-      _generateRandomNumber();
-    }
 
-    else{
-      if(number > randomNumber.value) {
+     if(number > randomNumber.value) {
         largerNumbers.add(number);
         largerNumbers.refresh();
         _scrollListNumber(
@@ -202,8 +185,25 @@ class GuessTheNumberController extends GetxController {
         );
         _restartGame();
         _generateRandomNumber();
+        return;
       }
+    
+    if(currentDifficultyLevel.value.difficultyLevels.attempts == 0) {
+      historyNumbers.add(HistoryNumbersModel(
+        result: Result.losser, 
+        color: Colors.red, 
+        numberHistory: randomNumber.value
+      ));
+      historyNumbers.refresh();
+      _scrollListNumber(
+           keyList: globalKeyHistoryNumbers,
+           listNumber: historyNumbers,
+           scrollControllerList: historyNumberssScrollController
+        );
+      _restartGame();
+      _generateRandomNumber();
     }
+
   }
 
   _generateRandomNumber() {
