@@ -6,19 +6,16 @@ import 'package:agnostiko_test/enums/result.enum.dart';
 import 'package:agnostiko_test/models/difficulty_levels.model.dart';
 import 'package:agnostiko_test/models/history_numbers.model.dart';
 import 'package:agnostiko_test/models/range_level.model.dart';
+import 'package:agnostiko_test/wrappers/difficulty_levels.wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 
 class GuessTheNumberController extends GetxController {
-  RxInt currentAttempts = 5.obs;
   RxInt randomNumber = 0.obs;
   RxDouble valueSlider = 0.0.obs;
-  Rx<DifficultyLevelsModel> currentDifficultyLevel = DifficultyLevelsModel(
-    attempts: 5,
-    difficulty: Difficulty.easy,
-    nameOfDifficulty: 'Fácil',
-    rangeLevelModel: RangeLevelModel(max: 0, min: 10)
+  Rx<DifficultyLevelWrapper> currentDifficultyLevel = DifficultyLevelWrapper(
+    difficultyLevels: DifficultyLevelsConstant().difficultyLevelsModel[0]
   ).obs;
 
  
@@ -38,6 +35,10 @@ class GuessTheNumberController extends GetxController {
   RxList<HistoryNumbersModel> historyNumbers = <HistoryNumbersModel>[].obs;
 
   initVariables() {
+
+    if(randomNumber.value == 0) {
+      _generateRandomNumber();
+    }
     
     numberFocusNode.addListener(() { 
       if(numberFocusNode.hasFocus) {
@@ -57,8 +58,8 @@ class GuessTheNumberController extends GetxController {
 
   changeDifficulty(double value) {
     valueSlider.value = value;
-    currentDifficultyLevel.value = DifficultyLevelsConstant().difficultyLevelsModel[value.toInt()];
-    currentAttempts.value = currentDifficultyLevel.value.attempts;
+    currentDifficultyLevel.value.difficultyLevels = DifficultyLevelsConstant().difficultyLevelsModel[value.toInt()];
+    currentDifficultyLevel.refresh();
     _restartGame();
     _generateRandomNumber();
 
@@ -81,7 +82,7 @@ class GuessTheNumberController extends GetxController {
 
   bool _validateNumber(String number) {
 
-    RegExp expNumbers = RegExp(r'[0-9]+');
+    RegExp expNumbers = RegExp(r'^[0-9]+$');
 
     if(!expNumbers.hasMatch(number)){
       showAlert(
@@ -98,8 +99,8 @@ class GuessTheNumberController extends GetxController {
 
   bool _validateScaleNumber (int number) {
 
-    int minValueRange = currentDifficultyLevel.value.rangeLevelModel.min;
-    int maxValueRange = currentDifficultyLevel.value.rangeLevelModel.max;
+    int minValueRange = currentDifficultyLevel.value.difficultyLevels.rangeLevelModel.min;
+    int maxValueRange = currentDifficultyLevel.value.difficultyLevels.rangeLevelModel.max;
 
     if(
       number > maxValueRange ||
@@ -119,10 +120,15 @@ class GuessTheNumberController extends GetxController {
 
   _addNumber(int number) {
 
-    currentDifficultyLevel.value.attempts -= 1;
+    currentDifficultyLevel.value.difficultyLevels = DifficultyLevelsModel(
+      attempts: currentDifficultyLevel.value.difficultyLevels.attempts - 1,
+      difficulty: currentDifficultyLevel.value.difficultyLevels.difficulty,
+      nameOfDifficulty: currentDifficultyLevel.value.difficultyLevels.nameOfDifficulty,
+      rangeLevelModel: currentDifficultyLevel.value.difficultyLevels.rangeLevelModel
+    );
     
 
-    if(currentDifficultyLevel.value.attempts == 0) {
+    if(currentDifficultyLevel.value.difficultyLevels.attempts == 0) {
       historyNumbers.add(HistoryNumbersModel(
         result: Result.losser, 
         color: Colors.red, 
@@ -160,8 +166,8 @@ class GuessTheNumberController extends GetxController {
   }
 
   _generateRandomNumber() {
-    int maxValueRange =  currentDifficultyLevel.value.rangeLevelModel.max;
-    int minValueRange =  currentDifficultyLevel.value.rangeLevelModel.min;
+    int maxValueRange =  currentDifficultyLevel.value.difficultyLevels.rangeLevelModel.max;
+    int minValueRange =  currentDifficultyLevel.value.difficultyLevels.rangeLevelModel.min;
     randomNumber.value = Random().nextInt(maxValueRange + minValueRange) + minValueRange;
   }
 
@@ -170,8 +176,8 @@ class GuessTheNumberController extends GetxController {
     largerNumbers.refresh();
     minorNumbers.value = [];
     minorNumbers.refresh();
-    currentDifficultyLevel.value = DifficultyLevelsConstant().difficultyLevelsModel[valueSlider.toInt()];
-  
+    currentDifficultyLevel.value.setDifficultyLevel = DifficultyLevelsConstant().difficultyLevelsModel[valueSlider.toInt()];
+    currentDifficultyLevel.refresh();
   }
   
 

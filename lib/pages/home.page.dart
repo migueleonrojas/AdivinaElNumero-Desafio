@@ -87,7 +87,7 @@ class HomePage extends StatelessWidget {
                     ),
                     Obx(
                       () => Text(
-                        guessTheNumberController.currentAttempts.value.toString(),
+                        guessTheNumberController.currentDifficultyLevel.value.difficultyLevels.attempts.toString(),
                         style: const TextStyle(
                           color: Colors.white
                         ),
@@ -248,7 +248,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     Obx(
                       () => Text(
-                        guessTheNumberController.currentDifficultyLevel.value.nameOfDifficulty,
+                        guessTheNumberController.currentDifficultyLevel.value.difficultyLevels.nameOfDifficulty,
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
