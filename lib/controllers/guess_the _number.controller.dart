@@ -132,8 +132,8 @@ class GuessTheNumberController extends GetxController {
     ){
       showAlert(
         title: 'Número fuera de rango',
-        message: 'Debe colocar un número entre un rango mínimo de $minValueRange hasta un rango máximo de $maxValueRange.',
-        duration: const Duration(seconds: 6)
+        message: 'Debe colocar un número entre el rango del $minValueRange hasta el $maxValueRange.',
+        duration: const Duration(seconds: 7)
       );
       return false;
     }
