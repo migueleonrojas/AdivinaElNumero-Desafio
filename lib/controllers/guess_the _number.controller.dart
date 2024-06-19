@@ -19,8 +19,8 @@ class GuessTheNumberController extends GetxController {
   GlobalKey get globalKeyHistoryNumbers => _globalKeyHistoryNumbers;
 
 
-  final double _heightElementList = Get.size.height * 0.025;
-  double get heightElementList => _heightElementList;
+  final RxDouble _heightElementList = (20.0).obs;
+  RxDouble get heightElementList => _heightElementList;
 
   final RxInt _randomNumber = 0.obs;
   RxInt get randomNumber => _randomNumber;
@@ -75,7 +75,7 @@ class GuessTheNumberController extends GetxController {
 
   initVariables() {
     if(randomNumber.value == 0) {
-      _generateRandomNumber();      
+      _generateRandomNumber();
     }
     numberFocusNode.addListener(() { 
       if(numberFocusNode.hasFocus) {
@@ -175,7 +175,7 @@ class GuessTheNumberController extends GetxController {
         minorNumbers.add(number);
         minorNumbers.refresh();
         _scrollListNumber(
-           keyList: _globalKeyMinorNumbers,
+           keyList: globalKeyMinorNumbers,
            listNumber: minorNumbers,
            scrollControllerList: minorNumbersScrollController
         );
@@ -242,9 +242,9 @@ class GuessTheNumberController extends GetxController {
       return;
     }
 
-    if(((listNumber.length + 1) * heightElementList) > keyList.currentContext!.size!.height) {
+    if(((listNumber.length + 1) * heightElementList.value) > keyList.currentContext!.size!.height) {
       scrollControllerList.animateTo(
-        listNumber.length * heightElementList, 
+        listNumber.length * heightElementList.value, 
         duration: const Duration(milliseconds: 300), 
         curve: Curves.linear
       );
@@ -265,4 +265,11 @@ class GuessTheNumberController extends GetxController {
       message
     );
   }
+
+  /*  functions log  */
+  viewListNumbers() {
+    
+  }
+
+  /*  */
 }

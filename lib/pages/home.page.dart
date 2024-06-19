@@ -135,7 +135,7 @@ class HomePage extends StatelessWidget {
                           () => Expanded(
                             child: ListView.builder(
                               key: guessTheNumberController.globalKeyLargerNumbers,
-                              itemExtent: guessTheNumberController.heightElementList,
+                              itemExtent: guessTheNumberController.heightElementList.value,
                               scrollDirection: Axis.vertical,
                               controller: guessTheNumberController.largerNumbersScrollController,
                               shrinkWrap: true,
@@ -182,7 +182,7 @@ class HomePage extends StatelessWidget {
                           () => Expanded(
                             child: ListView.builder(
                               key: guessTheNumberController.globalKeyMinorNumbers,
-                              itemExtent: guessTheNumberController.heightElementList,
+                              itemExtent: guessTheNumberController.heightElementList.value,
                               controller: guessTheNumberController.minorNumbersScrollController,       
                               shrinkWrap: true,
                               itemCount: guessTheNumberController.minorNumbers.length,
@@ -227,7 +227,7 @@ class HomePage extends StatelessWidget {
                         Obx(
                           () => Expanded(
                             child: ListView.builder(
-                              itemExtent: guessTheNumberController.heightElementList,
+                              itemExtent: guessTheNumberController.heightElementList.value,
                               key: guessTheNumberController.globalKeyHistoryNumbers,
                               controller: guessTheNumberController.historyNumberssScrollController,       
                               shrinkWrap: true,
