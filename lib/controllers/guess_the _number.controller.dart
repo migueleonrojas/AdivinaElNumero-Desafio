@@ -265,11 +265,4 @@ class GuessTheNumberController extends GetxController {
       message
     );
   }
-
-  /*  functions log  */
-  viewListNumbers() {
-    
-  }
-
-  /*  */
 }
